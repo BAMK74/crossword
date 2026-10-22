@@ -603,10 +603,13 @@ function fitGrid() {
     if (grid.style.getPropertyValue("--cell") === size) break;
     grid.style.setProperty("--cell", size);
   }
-  // Line the score cards up with the edges of the grid (plus the rack beside it).
-  const beside = getComputedStyle(grid.parentElement).display === "flex";
-  const span = grid.offsetWidth + (beside ? rack.offsetWidth + 28 : 0);
-  $(".scoreboard").style.maxWidth = `${Math.max(span, 300)}px`;
+  // Line the score cards up with the edges of the grid, also when the rack sits beside
+  // it (then the grid is off-center, so the score row is shifted to sit over it).
+  const board = $(".scoreboard");
+  board.style.maxWidth = `${Math.max(grid.offsetWidth, 300)}px`;
+  board.style.left = "0px";
+  const g = grid.getBoundingClientRect(), s = board.getBoundingClientRect();
+  board.style.left = `${Math.round((g.left + g.right) / 2 - (s.left + s.right) / 2)}px`;
 }
 window.addEventListener("resize", () => S && fitGrid());
 document.querySelector(".help").addEventListener("toggle", () => S && fitGrid());

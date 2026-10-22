@@ -61,6 +61,7 @@ button:hover { opacity: .85; }
 /* Scores: a card on each side, with whose turn it is in the middle. A turn's points
    are tallied when it ends (see .tally), then the number runs up. */
 .scoreboard {
+  position: relative; /* fitGrid() shifts it to sit over the grid */
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
