@@ -129,6 +129,7 @@ button:hover { opacity: .85; }
   gap: 8px;
   margin-top: 12px;
 }
+.rack-side { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .rack {
   display: flex;
   justify-content: center;
@@ -457,14 +458,18 @@ main {
   to { opacity: 1; transform: none; }
 }
 
-/* Wide screens: rack beside the grid, so the grid can use nearly the full height,
-   with the tiles stacked vertically in a tall rack. */
+/* Wide screens: rack beside the grid, so the grid can use nearly the full height.
+   The rack is as tall as the grid with the tiles stacked in it, sized to fill it
+   (--tile is set by fitGrid() in game.js); the button and info go beside the rack. */
 @media (min-width: 760px) and (min-aspect-ratio: 1/1) {
   .board { display: flex; align-items: center; justify-content: center; gap: 28px; }
   .grid { margin: 0; }
-  .rack-area { margin-top: 0; width: 170px; flex: none; }
-  .rack { min-width: 0; min-height: 206px; padding: 8px 6px 10px; } /* room for 5 tiles */
-  .hand { flex-direction: column; }
+  .rack-area { flex-direction: row; align-items: center; gap: 16px; margin-top: 0; flex: none; }
+  .rack { min-width: 0; height: var(--rack-h, 206px); padding: 10px 8px; align-items: center; }
+  .hand { flex-direction: column; gap: var(--tile-gap, 4px); }
+  .tile { width: var(--tile, 32px); height: var(--tile, 32px); font-size: calc(var(--tile, 32px) * .5); border-radius: calc(var(--tile, 32px) * .14); }
+  .tile::after { font-size: calc(var(--tile, 32px) * .17); right: 6%; bottom: 3%; }
+  .rack-side { width: 140px; }
   .info-row { flex-direction: column; gap: 6px; }
-  .help { max-width: 170px; }
+  .help { max-width: 140px; }
 }

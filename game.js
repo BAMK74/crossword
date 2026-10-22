@@ -582,26 +582,39 @@ function render() {
 
 // Sizes the grid squares so the whole game fits the window: whatever height (and
 // width) the rest of the page doesn't use goes to the grid (26–96px per square).
-// On wide screens the rack sits beside the grid (see style.css), so it takes width
-// instead of height.
+// On wide screens the rack sits beside the grid (see style.css): it's as tall as the
+// grid and its tiles grow with it, so it takes width instead of height.
 function fitGrid() {
-  const grid = $("#grid"), rack = $(".rack-area");
+  const grid = $("#grid"), root = document.documentElement.style;
+  const beside = getComputedStyle(grid.parentElement).display === "flex";
   // Start from the smallest size: a grid that's too big would make phone browsers
   // widen the page, and the window would then measure wider than the screen.
   grid.style.setProperty("--cell", "26px");
+  root.setProperty("--rack-h", "206px");
+  root.setProperty("--tile", "32px");
   // The rest of the page can still shift as the grid grows, so measure again until
   // the size settles.
   for (let pass = 0; pass < 3; pass++) {
-    const beside = getComputedStyle(grid.parentElement).display === "flex";
     const rest = beside
       ? document.body.offsetHeight - grid.parentElement.offsetHeight
       : document.body.offsetHeight - grid.offsetHeight;
-    const side = beside ? rack.offsetWidth + 28 : 0;
-    const byWidth = (innerWidth - 36 - side) / S.puzzle.cols;
+    // Beside the grid, the rack's tiles are a fifth of the grid's height wide, so the
+    // grid and rack together are cols + rows/5 squares across, plus fixed parts:
+    // the gaps (28 + 16), the side column, the rack's padding (16) and some slack.
+    const across = beside ? S.puzzle.cols + S.puzzle.rows / 5 : S.puzzle.cols;
+    const fixed = beside ? 28 + 16 + $(".rack-side").offsetWidth + 16 + 12 : 0;
+    const byWidth = (innerWidth - 36 - fixed) / across;
     const byHeight = (innerHeight - rest - 12) / S.puzzle.rows;
     const size = `${Math.max(26, Math.min(96, Math.floor(Math.min(byWidth, byHeight))))}px`;
     if (grid.style.getPropertyValue("--cell") === size) break;
     grid.style.setProperty("--cell", size);
+  }
+  if (beside) {
+    // Rack as tall as the grid; 5 tiles with 6px gaps inside its 10px padding.
+    const h = grid.offsetHeight;
+    root.setProperty("--rack-h", `${h}px`);
+    root.setProperty("--tile", `${Math.floor((h - 20 - 4 * 6) / 5)}px`);
+    root.setProperty("--tile-gap", "6px");
   }
   // Line the score cards up with the edges of the grid, also when the rack sits beside
   // it (then the grid is off-center, so the score row is shifted to sit over it).
