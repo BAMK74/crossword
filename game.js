@@ -598,10 +598,10 @@ function fitGrid() {
     const rest = beside
       ? document.body.offsetHeight - grid.parentElement.offsetHeight
       : document.body.offsetHeight - grid.offsetHeight;
-    // Beside the grid, the rack's tiles are a fifth of the grid's height wide, so the
-    // grid and rack together are cols + rows/5 squares across, plus fixed parts:
-    // the gaps (28 + 16), the side column, the rack's padding (16) and some slack.
-    const across = beside ? S.puzzle.cols + S.puzzle.rows / 5 : S.puzzle.cols;
+    // Beside the grid, the rack's tiles are as wide as a grid square, so the grid and
+    // rack together are cols + 1 squares across, plus fixed parts: the gaps (28 + 16),
+    // the side column, the rack's padding (16) and some slack.
+    const across = beside ? S.puzzle.cols + 1 : S.puzzle.cols;
     const fixed = beside ? 28 + 16 + $(".rack-side").offsetWidth + 16 + 12 : 0;
     const byWidth = (innerWidth - 36 - fixed) / across;
     const byHeight = (innerHeight - rest - 12) / S.puzzle.rows;
@@ -610,11 +610,9 @@ function fitGrid() {
     grid.style.setProperty("--cell", size);
   }
   if (beside) {
-    // Rack as tall as the grid; 5 tiles with 6px gaps inside its 10px padding.
-    const h = grid.offsetHeight;
-    root.setProperty("--rack-h", `${h}px`);
-    root.setProperty("--tile", `${Math.floor((h - 20 - 4 * 6) / 5)}px`);
-    root.setProperty("--tile-gap", "6px");
+    // Rack as tall as the grid, tiles the size of a grid square spread down it.
+    root.setProperty("--rack-h", `${grid.offsetHeight}px`);
+    root.setProperty("--tile", grid.style.getPropertyValue("--cell"));
   }
   // Line the score cards up with the edges of the grid, also when the rack sits beside
   // it (then the grid is off-center, so the score row is shifted to sit over it).
