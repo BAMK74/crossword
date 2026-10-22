@@ -1,0 +1,465 @@
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --text: #1d1d1f;
+  --muted: #6b6b70;
+  --line: #2b2b2e;
+  --clue-bg: #e6edf5;
+  --player: #2f9e6a;
+  --player-soft: #d6f2e3;
+  --cpu: #d9534f;
+  --cpu-soft: #fbdcda;
+}
+
+* { box-sizing: border-box; }
+
+/* Everything centered, also vertically when the window has height to spare. The body
+   stays as tall as its content, which fitGrid() in game.js relies on. */
+html {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* never wider than the window */
+  place-items: center;
+  background: var(--bg);
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  padding: 16px;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 1000px;
+  margin: 0 auto 10px;
+  text-align: center;
+}
+
+h1 { font-size: 1.5rem; margin: 0; }
+
+.controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; align-items: center; }
+.controls label { display: flex; gap: 6px; align-items: center; font-size: .9rem; color: var(--muted); }
+
+select, button {
+  font: inherit;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: var(--surface);
+  color: var(--text);
+}
+button { background: var(--line); color: #fff; border-color: var(--line); cursor: pointer; }
+button:hover { opacity: .85; }
+
+/* Scores: a card on each side, with whose turn it is in the middle. A turn's points
+   are tallied when it ends (see .tally), then the number runs up. */
+.scoreboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  max-width: 640px;
+  min-width: max-content; /* wider than the grid if the cards need it, still centered */
+  margin: 6px auto 12px;
+}
+.counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 2px solid var(--player-soft);
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.counter.player { justify-self: start; }
+.counter.cpu { justify-self: end; border-color: var(--cpu-soft); }
+/* The side whose turn it is stands out. */
+.counter.active { transform: scale(1.06); }
+.counter.player.active { border-color: var(--player); box-shadow: 0 0 0 4px var(--player-soft); }
+.counter.cpu.active { border-color: var(--cpu); box-shadow: 0 0 0 4px var(--cpu-soft); }
+.counter .avatar { font-size: 1.5rem; line-height: 1; }
+.counter .who { color: var(--muted); font-size: .85rem; font-weight: 600; }
+.digits {
+  min-width: 1.6em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.counter.player .digits { color: var(--player); }
+.counter.cpu .digits { color: var(--cpu); }
+.digits.bump { animation: bump .8s ease-out; }
+@keyframes bump {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+.turn {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: .9rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.turn:empty { display: none; }
+.turn.player { background: var(--player-soft); color: var(--player); }
+.turn.cpu { background: var(--cpu-soft); color: var(--cpu); }
+/* Phones: drop the names, keep faces and numbers. */
+@media (max-width: 480px) {
+  .counter .who { display: none; }
+  .counter { padding: 4px 10px; gap: 6px; }
+}
+
+/* Hand of letters: tiles on a wooden rack, centered under the grid. */
+.rack-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.rack {
+  display: flex;
+  justify-content: center;
+  min-width: 192px; /* room for 5 tiles, so it doesn't shrink as tiles are played */
+  padding: 4px 8px 6px;
+  border-radius: 8px;
+  background: linear-gradient(#a5774a, #8a5d33);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 3px 0 #6b4524, 0 6px 10px rgba(0,0,0,.15);
+}
+.hand { display: flex; justify-content: center; gap: 4px; min-height: 36px; }
+.tile {
+  position: relative;
+  width: 32px;
+  height: 36px;
+  padding: 0;
+  border-radius: 5px;
+  border: 1px solid #c9a868;
+  background: linear-gradient(#fdf0cf, #f3d999);
+  color: #3b2a14;
+  font-size: 1.1rem;
+  font-weight: 800;
+  box-shadow: 0 2px 0 #b8924d, 0 3px 5px rgba(0,0,0,.2);
+  cursor: pointer;
+  transition: transform .12s, box-shadow .12s;
+}
+.tile::after {
+  /* 1 point per letter, like a board-game tile */
+  content: "1";
+  position: absolute;
+  right: 3px;
+  bottom: 1px;
+  font-size: .5rem;
+  font-weight: 700;
+}
+.tile:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 5px 0 #b8924d, 0 7px 10px rgba(0,0,0,.2); }
+.tile:not(:disabled) { cursor: grab; touch-action: none; }
+/* Drag and drop: the tile left in the rack fades, a copy follows the pointer. */
+.tile.lifted { opacity: .3; }
+.tile.dragging {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.12) rotate(-4deg);
+  box-shadow: 0 8px 0 #b8924d, 0 16px 24px rgba(0,0,0,.3);
+  transition: none;
+}
+.cell.drop-target { background: #fdf0cf; box-shadow: inset 0 0 0 3px #c9a868; }
+.tile:disabled { filter: grayscale(.6); opacity: .55; cursor: default; }
+.end-turn {
+  padding: 5px 16px;
+  border-radius: 999px;
+  font-size: .9rem;
+  font-weight: 600;
+}
+.end-turn:disabled { opacity: .35; cursor: default; }
+.message { min-height: 1.2em; margin: 0; color: var(--cpu); font-size: .9rem; text-align: center; }
+.info-row { display: flex; justify-content: center; align-items: center; gap: 24px; color: var(--muted); font-size: .85rem; }
+.bag-count::before { content: "👜 "; }
+.cpu-hand { display: flex; align-items: center; gap: 4px; }
+.cpu-hand::before { content: "🤖"; margin-right: 4px; }
+.tile.back {
+  display: inline-block;
+  width: 18px;
+  height: 22px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(45deg, var(--cpu) 0 3px, #e57b77 3px 6px);
+  border: 0;
+  box-shadow: none;
+}
+@keyframes pop {
+  0% { transform: scale(1.25); }
+  100% { transform: none; }
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.board { max-width: 100%; }
+
+/* Enlarged clue, shown over a clue square when it's clicked. */
+.clue-zoom {
+  position: fixed;
+  z-index: 50;
+  max-width: min(220px, calc(100vw - 16px));
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 2px solid #9db6d3;
+  box-shadow: 0 6px 18px rgba(0,0,0,.2);
+  text-align: center;
+  pointer-events: none;
+}
+.clue-zoom[hidden] { display: none; }
+.clue-zoom.pop { animation: zoom-in .18s ease-out; }
+@keyframes zoom-in {
+  from { transform: scale(.4); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.zoom-text { font-size: 1.05rem; font-weight: 600; line-height: 1.25; }
+.zoom-image { font-size: 2.6rem; line-height: 1.1; }
+.zoom-image img { max-width: 120px; max-height: 90px; }
+
+.grid {
+  /* Square size; fitGrid() in game.js sets it to fit the window. */
+  --cell: 48px;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--cell));
+  grid-auto-rows: var(--cell);
+  border: 2px solid var(--line);
+  width: max-content;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.cell {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  margin: 0 -1px -1px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.cell .letter { font-size: calc(var(--cell) * .55); font-weight: 600; }
+
+/* Clue squares: one clue, or two stacked (across on top, down below). */
+.cluecell {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--clue-bg);
+  border: 1px solid var(--line);
+  margin: 0 -1px -1px 0;
+}
+.clue {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 2px;
+  text-align: center;
+  cursor: pointer;
+}
+.cluecell.split .clue + .clue { border-top: 1px solid var(--line); }
+.clue .txt {
+  /* As big as the square allows, but small enough that the longest word fits on
+     one line (a letter is about 0.58em wide); never below 8px. Words too long
+     even at 8px wrap as a last resort. */
+  font-size: max(8px, min(calc(var(--cell) * .18), calc((var(--cell) - 5px) / (var(--longest, 6) * .58))));
+  line-height: 1.1;
+  overflow: hidden;
+  overflow-wrap: anywhere; /* only for words too long even at 8px */
+  max-height: 100%;
+}
+.clue .emoji { font-size: calc(var(--cell) * .55); line-height: 1; }
+.cluecell.split .clue .emoji { font-size: calc(var(--cell) * .3); }
+.clue img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.clue:hover { filter: brightness(.95); }
+.clue.own-player { background: var(--player-soft); color: var(--player); }
+.clue.own-cpu { background: var(--cpu-soft); color: var(--cpu); }
+.clue.cpu-typing { box-shadow: inset 0 0 0 2px var(--cpu); }
+
+/* Arrow pointing into the answer: right edge for across, bottom edge for down. */
+.clue::after {
+  position: absolute;
+  content: "";
+  border: 5px solid transparent;
+  z-index: 2;
+}
+.clue.arrow-right::after { right: -6px; top: 50%; transform: translateY(-50%); border-left: 6px solid var(--line); border-right: 0; }
+.clue.arrow-down::after { bottom: -6px; left: 50%; transform: translateX(-50%); border-top: 6px solid var(--line); border-bottom: 0; }
+/* Bent arrows: the word starts diagonally, beside the square below or to the right. */
+.clue.arrow-down-right::after,
+.clue.arrow-right-down::after {
+  border: 0;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--line);
+}
+.clue.arrow-down-right::after { content: "↳"; bottom: -8px; left: 50%; transform: translateX(-50%); }
+.clue.arrow-right-down::after { content: "⤵"; right: -9px; top: 50%; transform: translateY(-50%); }
+
+.cell.own-player { background: var(--player-soft); color: var(--player); }
+.cell.own-cpu { background: var(--cpu-soft); color: var(--cpu); }
+.cell.cpu-last { box-shadow: inset 0 0 0 2px var(--cpu); }
+.cell.wrong { color: #c0392b; }
+.cell.cpu-typing { box-shadow: inset 0 0 0 2px var(--cpu); }
+/* Square that typed letters go into: a thin outline, no fill. */
+.cell.selected { box-shadow: inset 0 0 0 2px #9db6d3; }
+.cell.wrong { animation: wrong .5s; }
+@keyframes wrong {
+  0%, 100% { transform: none; }
+  25% { transform: translateX(-3px); background: #ffb3b0; }
+  75% { transform: translateX(3px); background: #ffb3b0; }
+}
+
+/* "How to play": folded away so it doesn't take space from the grid. */
+.help { color: var(--muted); font-size: .85rem; max-width: 580px; margin: 10px auto 0; text-align: center; }
+.help summary { cursor: pointer; font-weight: 600; }
+.help p { margin: 6px 0 0; }
+.len { color: var(--muted); font-size: .85em; }
+
+/* End screen: above everything (clue squares use z-index 1–2), with a blurred grid behind. */
+.result {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(40, 30, 20, .35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+}
+.result[hidden] { display: none; }
+.result-card {
+  position: relative;
+  z-index: 2;
+  width: min(420px, 100%);
+  background: linear-gradient(#fffdf6, #fff4dc);
+  border: 3px solid #f1d38c;
+  border-radius: 24px;
+  padding: 26px 28px 28px;
+  text-align: center;
+  box-shadow: 0 16px 50px rgba(0,0,0,.3);
+  animation: card-in .5s cubic-bezier(.2, 1.4, .4, 1);
+}
+@keyframes card-in {
+  from { transform: scale(.6) rotate(-6deg); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.result-emoji {
+  font-size: 4.5rem;
+  line-height: 1;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-10px) rotate(4deg); }
+}
+#result-text { font-size: 1.8rem; font-weight: 800; margin: 10px 0 4px; }
+.result-quip { color: var(--muted); margin: 0 0 18px; font-size: 1rem; }
+.result-scores { display: flex; gap: 12px; margin-bottom: 20px; }
+.rs {
+  position: relative;
+  flex: 1;
+  padding: 12px 8px 10px;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 2px solid transparent;
+}
+.rs.player { border-color: var(--player-soft); }
+.rs.cpu { border-color: var(--cpu-soft); }
+.rs.winner.player { background: var(--player-soft); border-color: var(--player); }
+.rs.winner.cpu { background: var(--cpu-soft); border-color: var(--cpu); }
+.rs .avatar { font-size: 2.2rem; line-height: 1; }
+.rs .name { display: block; font-size: .85rem; color: var(--muted); margin-top: 4px; }
+.rs .points { display: block; font-size: 1.8rem; font-weight: 800; }
+.rs.player .points { color: var(--player); }
+.rs.cpu .points { color: var(--cpu); }
+.rs .solved { display: block; font-size: .8rem; color: var(--muted); }
+.rs.winner .avatar { margin-top: 10px; }
+.rs .crown { position: absolute; top: -20px; left: 50%; transform: translateX(-50%) rotate(-10deg); font-size: 1.8rem; }
+#play-again { padding: 10px 28px; border-radius: 999px; font-size: 1.05rem; font-weight: 700; }
+
+/* Falling emoji confetti. */
+.confetti { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.confetti span {
+  position: absolute;
+  top: -10%;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  to { transform: translateY(120vh) rotate(540deg); }
+}
+
+/* End-of-turn tally: the turn's points line by line, then the total. */
+.tally {
+  position: fixed;
+  z-index: 60;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(300px, calc(100vw - 32px));
+  padding: 16px 20px 14px;
+  border-radius: 20px;
+  background: #fffdf6;
+  border: 3px solid var(--player);
+  box-shadow: 0 14px 40px rgba(0,0,0,.3);
+  animation: tally-in .3s cubic-bezier(.2, 1.4, .4, 1);
+}
+.tally.cpu { border-color: var(--cpu); }
+.tally[hidden] { display: none; }
+@keyframes tally-in {
+  from { transform: translate(-50%, -50%) scale(.6); opacity: 0; }
+  to { transform: translate(-50%, -50%); opacity: 1; }
+}
+.tally-title { font-weight: 800; font-size: 1.15rem; text-align: center; margin-bottom: 8px; }
+.tally-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 2px;
+  font-size: 1rem;
+  opacity: 0;
+  animation: row-in .3s ease-out forwards;
+}
+.tally-row b { font-variant-numeric: tabular-nums; }
+.tally.player .tally-row b { color: var(--player); }
+.tally.cpu .tally-row b { color: var(--cpu); }
+.tally-row.total { margin-top: 6px; padding-top: 8px; border-top: 2px dashed #e2d6b8; font-weight: 800; font-size: 1.2rem; }
+@keyframes row-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Wide screens: rack beside the grid, so the grid can use nearly the full height. */
+@media (min-width: 760px) and (min-aspect-ratio: 1/1) {
+  .board { display: flex; align-items: center; justify-content: center; gap: 28px; }
+  .grid { margin: 0; }
+  .rack-area { margin-top: 0; width: 230px; flex: none; }
+  .help { max-width: 230px; }
+}

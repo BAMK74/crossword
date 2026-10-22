@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crossword Duel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1 data-i18n="title">Crossword Duel</h1>
+    <div class="controls">
+      <label><span data-i18n="language">Language</span>
+        <select id="lang">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="es">Español</option>
+        </select>
+      </label>
+      <label><span data-i18n="puzzle">Puzzle</span>
+        <select id="puzzle-level">
+          <option value="easy" data-i18n="easy">Easy</option>
+          <option value="medium" data-i18n="medium" selected>Medium</option>
+          <option value="hard" data-i18n="hard">Hard</option>
+        </select>
+      </label>
+      <label><span data-i18n="opponent">Computer</span>
+        <select id="difficulty">
+          <option value="easy" data-i18n="easy">Easy</option>
+          <option value="medium" data-i18n="medium" selected>Medium</option>
+          <option value="hard" data-i18n="hard">Hard</option>
+        </select>
+      </label>
+      <button id="new-game" data-i18n="newGame">New game</button>
+    </div>
+  </header>
+
+  <section class="scoreboard">
+    <div class="counter player">
+      <span class="avatar">😎</span>
+      <span class="who" data-i18n="you">You</span>
+      <b id="score-player" class="digits">0</b>
+    </div>
+    <div id="turn" class="turn"></div>
+    <div class="counter cpu">
+      <b id="score-cpu" class="digits">0</b>
+      <span class="who" data-i18n="cpu">Computer</span>
+      <span class="avatar">🤖</span>
+    </div>
+  </section>
+
+  <main>
+    <div class="board">
+      <div id="grid" class="grid"></div>
+      <div class="rack-area">
+        <div class="rack"><div id="hand" class="hand"></div></div>
+        <button id="end-turn" class="end-turn" data-i18n="endTurn">End turn</button>
+        <p id="message" class="message"></p>
+        <div class="info-row">
+          <span id="bag-count" class="bag-count"></span>
+          <span id="cpu-hand" class="cpu-hand"></span>
+        </div>
+        <details class="help">
+          <summary data-i18n="howTo">How to play</summary>
+          <p data-i18n="help"></p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <div id="tally" class="tally" hidden></div>
+  <div id="clue-zoom" class="clue-zoom" hidden></div>
+
+  <div id="result" class="result" hidden>
+    <div id="confetti" class="confetti"></div>
+    <div class="result-card">
+      <div id="result-emoji" class="result-emoji"></div>
+      <p id="result-text"></p>
+      <p id="result-quip" class="result-quip"></p>
+      <div id="result-score" class="result-scores"></div>
+      <button id="play-again" data-i18n="playAgain">Play again</button>
+    </div>
+  </div>
+
+  <script src="puzzles.js"></script>
+  <script src="clues.js"></script>
+  <script src="generator.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
