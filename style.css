@@ -456,10 +456,14 @@ main {
   to { opacity: 1; transform: none; }
 }
 
-/* Wide screens: rack beside the grid, so the grid can use nearly the full height. */
+/* Wide screens: rack beside the grid, so the grid can use nearly the full height,
+   with the tiles stacked vertically in a tall rack. */
 @media (min-width: 760px) and (min-aspect-ratio: 1/1) {
   .board { display: flex; align-items: center; justify-content: center; gap: 28px; }
   .grid { margin: 0; }
-  .rack-area { margin-top: 0; width: 230px; flex: none; }
-  .help { max-width: 230px; }
+  .rack-area { margin-top: 0; width: 170px; flex: none; }
+  .rack { min-width: 0; min-height: 206px; padding: 8px 6px 10px; } /* room for 5 tiles */
+  .hand { flex-direction: column; }
+  .info-row { flex-direction: column; gap: 6px; }
+  .help { max-width: 170px; }
 }
