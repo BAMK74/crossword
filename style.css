@@ -458,19 +458,18 @@ main {
   to { opacity: 1; transform: none; }
 }
 
-/* Wide screens: rack beside the grid, so the grid can use nearly the full height.
-   The rack is as tall as the grid, with tiles the size of a grid square spread
-   evenly down it (--tile is set by fitGrid() in game.js); the button and info go
-   beside the rack. */
+/* Wide screens: the rack and its controls form a column beside the grid, so the
+   grid can use nearly the full height. The column is no taller than the grid: the
+   rack hugs its tiles (stacked, about the size of a grid square; --tile is set by
+   fitGrid() in game.js) with End turn, the bag count and How to play below it. */
 @media (min-width: 760px) and (min-aspect-ratio: 1/1) {
   .board { display: flex; align-items: center; justify-content: center; gap: 28px; }
   .grid { margin: 0; }
-  .rack-area { flex-direction: row; align-items: center; gap: 16px; margin-top: 0; flex: none; }
-  .rack { min-width: 0; height: var(--rack-h, 206px); padding: 10px 8px; align-items: center; }
-  .hand { flex-direction: column; justify-content: space-evenly; height: 100%; }
+  .rack-area { justify-content: center; gap: 12px; height: var(--rack-h, auto); width: 150px; margin-top: 0; flex: none; }
+  .rack { min-width: 0; padding: 6px; }
+  .hand { flex-direction: column; gap: 6px; }
   .tile { width: var(--tile, 32px); height: var(--tile, 32px); font-size: calc(var(--tile, 32px) * .5); border-radius: calc(var(--tile, 32px) * .14); }
   .tile::after { font-size: calc(var(--tile, 32px) * .17); right: 6%; bottom: 3%; }
-  .rack-side { width: 140px; }
   .info-row { flex-direction: column; gap: 6px; }
-  .help { max-width: 140px; }
+  .help { max-width: 150px; }
 }

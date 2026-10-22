@@ -590,7 +590,7 @@ function fitGrid() {
   // Start from the smallest size: a grid that's too big would make phone browsers
   // widen the page, and the window would then measure wider than the screen.
   grid.style.setProperty("--cell", "26px");
-  root.setProperty("--rack-h", "206px");
+  root.setProperty("--rack-h", "auto");
   root.setProperty("--tile", "32px");
   // The rest of the page can still shift as the grid grows, so measure again until
   // the size settles.
@@ -598,21 +598,24 @@ function fitGrid() {
     const rest = beside
       ? document.body.offsetHeight - grid.parentElement.offsetHeight
       : document.body.offsetHeight - grid.offsetHeight;
-    // Beside the grid, the rack's tiles are as wide as a grid square, so the grid and
-    // rack together are cols + 1 squares across, plus fixed parts: the gaps (28 + 16),
-    // the side column, the rack's padding (16) and some slack.
-    const across = beside ? S.puzzle.cols + 1 : S.puzzle.cols;
-    const fixed = beside ? 28 + 16 + $(".rack-side").offsetWidth + 16 + 12 : 0;
-    const byWidth = (innerWidth - 36 - fixed) / across;
+    // Beside the grid, the rack column (150px, see style.css) and the gap (28px) take
+    // width, plus some slack.
+    const fixed = beside ? 28 + 150 + 12 : 0;
+    const byWidth = (innerWidth - 36 - fixed) / S.puzzle.cols;
     const byHeight = (innerHeight - rest - 12) / S.puzzle.rows;
     const size = `${Math.max(26, Math.min(96, Math.floor(Math.min(byWidth, byHeight))))}px`;
     if (grid.style.getPropertyValue("--cell") === size) break;
     grid.style.setProperty("--cell", size);
   }
   if (beside) {
-    // Rack as tall as the grid, tiles the size of a grid square spread down it.
-    root.setProperty("--rack-h", `${grid.offsetHeight}px`);
-    root.setProperty("--tile", grid.style.getPropertyValue("--cell"));
+    // The rack column is as tall as the grid. Tiles are the size of a grid square,
+    // unless the rack (5 tiles, 6px gaps, 12px padding) plus the controls below it
+    // (and the 12px gap between) would then be taller than the grid.
+    const h = grid.offsetHeight, below = $(".rack-side").offsetHeight;
+    const cell = parseInt(grid.style.getPropertyValue("--cell"), 10);
+    const fit = Math.floor((h - below - 12 - 12 - 4 * 6) / 5);
+    root.setProperty("--rack-h", `${h}px`);
+    root.setProperty("--tile", `${Math.max(26, Math.min(cell, fit, 138))}px`);
   }
   // Line the score cards up with the edges of the grid, also when the rack sits beside
   // it (then the grid is off-center, so the score row is shifted to sit over it).
