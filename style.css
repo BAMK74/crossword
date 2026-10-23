@@ -39,20 +39,81 @@ body {
   color: var(--text);
 }
 
-header {
+/* Start menu: a card with the settings as big buttons and a Play button. */
+.menu { display: flex; justify-content: center; }
+.menu[hidden], .game[hidden] { display: none; }
+.menu-card {
+  width: min(460px, 100%);
+  padding: 24px 20px 20px;
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: 0 10px 34px rgba(0,0,0,.12);
+  text-align: center;
+  animation: modal-in .3s ease-out;
+}
+.menu-logo { width: 88px; height: 88px; border-radius: 22px; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
+.menu-card h1 { font-size: 1.7rem; margin: 12px 0 18px; }
+.menu-group { margin-bottom: 16px; }
+.menu-group h2 { margin: 0 0 8px; font-size: .85rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; }
+.choices[data-setting="lang"] { grid-template-columns: repeat(4, 1fr); } /* all four on one row */
+@media (max-width: 480px) { .choices[data-setting="lang"] .choice { font-size: .8rem; padding: 8px 2px; } }
+.choice {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  max-width: 1000px;
-  margin: 0 auto 10px;
-  text-align: center;
+  gap: 2px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  border: 2px solid #e6e0d3;
+  background: #fbf9f4;
+  color: var(--text);
+  font-size: .95rem;
+  font-weight: 600;
 }
-
-h1 { font-size: 1.5rem; margin: 0; }
-
-.controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; align-items: center; }
-.controls label { display: flex; gap: 6px; align-items: center; font-size: .9rem; color: var(--muted); }
+.choice .big { font-size: 1.5rem; line-height: 1.2; }
+.choice.selected { border-color: var(--player); background: var(--player-soft); color: #1f6e49; }
+.choice:hover { opacity: 1; border-color: #cfc6b2; }
+.choice.selected:hover { border-color: var(--player); }
+.play-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--player);
+  font-size: 1.3rem;
+  font-weight: 800;
+  box-shadow: 0 4px 0 #1f6e49;
+}
+.play-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #1f6e49; }
+.continue-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px;
+  border-radius: 999px;
+  border: 2px solid var(--player);
+  background: var(--surface);
+  color: var(--player);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.continue-btn[hidden] { display: none; }
+.menu-card .how-to-btn { margin-top: 12px; }
+/* In the game: a small link-style button back to the menu. */
+.menu-btn {
+  padding: 4px 10px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.menu-btn::before { content: "☰ "; }
+.result-buttons { display: flex; gap: 10px; justify-content: center; }
+.result-menu-btn { padding: 10px 22px; border-radius: 999px; font-size: 1.05rem; font-weight: 700; background: var(--surface); color: var(--text); border: 2px solid #d9d2c3; }
 
 select, button {
   font: inherit;
@@ -124,6 +185,8 @@ button:hover { opacity: .85; }
 .turn.cpu { background: var(--cpu-soft); color: var(--cpu); }
 /* Phones: drop the names, keep faces and numbers. */
 @media (max-width: 480px) {
+  /* Narrow screens: the width limits the grid, so keep the side margins small. */
+  body { padding-left: max(6px, env(safe-area-inset-left)); padding-right: max(6px, env(safe-area-inset-right)); }
   .counter .who { display: none; }
   .counter { padding: 4px 10px; gap: 6px; }
 }

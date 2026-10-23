@@ -28,7 +28,7 @@ const I18N = {
     notInHand: "You don't have that letter.", noRoom: "That square is already filled.",
     letters: "letters", wrong: "wrong", wordBonus: "word complete", allLetters: "all letters used", gridBonus: "grid finished",
     help: `Each turn you get up to ${HAND_SIZE} letters. Drag a letter from your hand onto a square (or pick a square and type the letter). Right square: +${LETTER_POINTS}. Wrong square: the letter comes back and you lose ${WRONG_PENALTY}. Finishing a word: +${WORD_BONUS}. All ${HAND_SIZE} letters in one turn: +${ALL_LETTERS_BONUS}. Last letter of the grid: +${GRID_BONUS}. Unused letters stay in your hand. Until you end your turn, you can drag letters you placed to another square or back to your rack. Space switches direction, Tab jumps to the next word.`,
-    youWin: "You win! 🎉", cpuWins: "The computer wins 🤖", draw: "It's a draw!", playAgain: "Play again", wordsSolved: "words", total: "Total", howTo: "How to play",
+    youWin: "You win! 🎉", cpuWins: "The computer wins 🤖", draw: "It's a draw!", playAgain: "Play again", wordsSolved: "words", total: "Total", howTo: "How to play", play: "Play", continue: "Continue", menu: "Menu",
     quips: {
       win: ["Word wizard! 🧙", "The computer is rebooting from shame.", "Dictionary? You ARE the dictionary.", "Brains: 1, Robot: 0 🧠"],
       lose: ["Beep boop. The robot does a victory dance. 🕺", "The computer had a byte too much luck.", "Rematch? It's getting cocky…", "Even robots need a win sometimes."],
@@ -42,7 +42,7 @@ const I18N = {
     notInHand: "Vous n'avez pas cette lettre.", noRoom: "Cette case est déjà remplie.",
     letters: "lettres", wrong: "erreur", wordBonus: "mot complet", allLetters: "toutes les lettres", gridBonus: "grille terminée",
     help: `À chaque tour vous avez jusqu'à ${HAND_SIZE} lettres. Faites glisser une lettre de votre main sur une case (ou choisissez une case et tapez la lettre). Bonne case : +${LETTER_POINTS}. Mauvaise case : la lettre revient et vous perdez ${WRONG_PENALTY}. Mot terminé : +${WORD_BONUS}. Les ${HAND_SIZE} lettres en un tour : +${ALL_LETTERS_BONUS}. Dernière lettre de la grille : +${GRID_BONUS}. Les lettres non jouées restent dans votre main. Tant que le tour n'est pas fini, vous pouvez déplacer les lettres posées vers une autre case ou les remettre sur le chevalet. Espace change de sens, Tab passe au mot suivant.`,
-    youWin: "Vous avez gagné ! 🎉", cpuWins: "L'ordinateur gagne 🤖", draw: "Égalité !", playAgain: "Rejouer", wordsSolved: "mots", total: "Total", howTo: "Comment jouer",
+    youWin: "Vous avez gagné ! 🎉", cpuWins: "L'ordinateur gagne 🤖", draw: "Égalité !", playAgain: "Rejouer", wordsSolved: "mots", total: "Total", howTo: "Comment jouer", play: "Jouer", continue: "Continuer", menu: "Menu",
     quips: {
       win: ["Magicien des mots ! 🧙", "L'ordinateur redémarre de honte.", "Le dictionnaire, c'est vous !", "Cerveau : 1, Robot : 0 🧠"],
       lose: ["Bip bip. Le robot fait sa danse de la victoire. 🕺", "L'ordinateur a eu un octet de chance en trop.", "Une revanche ? Il prend la grosse tête…", "Même les robots ont besoin de gagner parfois."],
@@ -56,7 +56,7 @@ const I18N = {
     notInHand: "Diesen Buchstaben hast du nicht.", noRoom: "Dieses Feld ist schon belegt.",
     letters: "Buchstaben", wrong: "falsch", wordBonus: "Wort fertig", allLetters: "alle Buchstaben", gridBonus: "Rätsel fertig",
     help: `In jedem Zug hast du bis zu ${HAND_SIZE} Buchstaben. Ziehe einen Buchstaben aus deiner Hand auf ein Feld (oder wähle ein Feld und tippe den Buchstaben). Richtiges Feld: +${LETTER_POINTS}. Falsches Feld: der Buchstabe kommt zurück und du verlierst ${WRONG_PENALTY}. Wort fertig: +${WORD_BONUS}. Alle ${HAND_SIZE} Buchstaben in einem Zug: +${ALL_LETTERS_BONUS}. Letzter Buchstabe des Rätsels: +${GRID_BONUS}. Ungenutzte Buchstaben bleiben in deiner Hand. Bis du den Zug beendest, kannst du gelegte Buchstaben auf ein anderes Feld ziehen oder zurück auf die Ablage legen. Leertaste wechselt die Richtung, Tab springt zum nächsten Wort.`,
-    youWin: "Du hast gewonnen! 🎉", cpuWins: "Der Computer gewinnt 🤖", draw: "Unentschieden!", playAgain: "Nochmal", wordsSolved: "Wörter", total: "Gesamt", howTo: "Spielanleitung",
+    youWin: "Du hast gewonnen! 🎉", cpuWins: "Der Computer gewinnt 🤖", draw: "Unentschieden!", playAgain: "Nochmal", wordsSolved: "Wörter", total: "Gesamt", howTo: "Spielanleitung", play: "Spielen", continue: "Weiterspielen", menu: "Menü",
     quips: {
       win: ["Wortzauberer! 🧙", "Der Computer startet vor Scham neu.", "Wörterbuch? Du BIST das Wörterbuch.", "Hirn: 1, Roboter: 0 🧠"],
       lose: ["Piep piep. Der Roboter tanzt vor Freude. 🕺", "Der Computer hatte ein Byte zu viel Glück.", "Revanche? Er wird langsam übermütig…", "Auch Roboter müssen mal gewinnen."],
@@ -70,7 +70,7 @@ const I18N = {
     notInHand: "No tienes esa letra.", noRoom: "Esa casilla ya está ocupada.",
     letters: "letras", wrong: "error", wordBonus: "palabra completa", allLetters: "todas las letras", gridBonus: "crucigrama terminado",
     help: `En cada turno tienes hasta ${HAND_SIZE} letras. Arrastra una letra de tu mano a una casilla (o elige una casilla y escribe la letra). Casilla correcta: +${LETTER_POINTS}. Casilla incorrecta: la letra vuelve y pierdes ${WRONG_PENALTY}. Palabra terminada: +${WORD_BONUS}. Las ${HAND_SIZE} letras en un turno: +${ALL_LETTERS_BONUS}. Última letra del crucigrama: +${GRID_BONUS}. Las letras que no uses se quedan en tu mano. Hasta que termines el turno, puedes arrastrar las letras que pusiste a otra casilla o devolverlas al atril. Espacio cambia de dirección, Tab pasa a la siguiente palabra. (Sin tildes, pero con Ñ.)`,
-    youWin: "¡Has ganado! 🎉", cpuWins: "Gana el ordenador 🤖", draw: "¡Empate!", playAgain: "Otra vez", wordsSolved: "palabras", total: "Total", howTo: "Cómo jugar",
+    youWin: "¡Has ganado! 🎉", cpuWins: "Gana el ordenador 🤖", draw: "¡Empate!", playAgain: "Otra vez", wordsSolved: "palabras", total: "Total", howTo: "Cómo jugar", play: "Jugar", continue: "Continuar", menu: "Menú",
     quips: {
       win: ["¡Mago de las palabras! 🧙", "El ordenador se reinicia de vergüenza.", "¿Diccionario? ¡Tú ERES el diccionario!", "Cerebro: 1, Robot: 0 🧠"],
       lose: ["Bip bip. El robot baila de alegría. 🕺", "El ordenador tuvo un byte de suerte de más.", "¿Revancha? Se le está subiendo a la cabeza…", "Hasta los robots necesitan ganar a veces."],
@@ -84,16 +84,30 @@ const ARROWS = { across: "→", down: "↓" };
 let S = null;
 let cpuTimer = null;
 const $ = s => document.querySelector(s);
-const t = key => I18N[S.lang][key];
+const t = key => I18N[settings.lang][key];
 const other = who => (who === "player" ? "cpu" : "player");
+
+// ---------- Settings (chosen in the start menu, remembered between visits) ----------
+const SETTINGS_KEY = "crossword-settings";
+const settings = (() => {
+  const browser = (navigator.language || "en").slice(0, 2);
+  const defaults = { lang: I18N[browser] ? browser : "en", level: "medium", cpu: "medium" };
+  try { return { ...defaults, ...JSON.parse(localStorage.getItem(SETTINGS_KEY)) }; } catch { return defaults; }
+})();
+function saveSettings() {
+  try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch {}
+}
+// Changing a setting means the game in progress can't simply be continued.
+let settingsChanged = false;
 
 function newGame() {
   clearTimeout(cpuTimer);
-  const lang = $("#lang").value;
-  const puzzle = generatePuzzle(lang, $("#puzzle-level").value);
+  settingsChanged = false;
+  const lang = settings.lang;
+  const puzzle = generatePuzzle(lang, settings.level);
   const bag = shuffle(puzzle.cells.flat().filter(c => c?.type === "letter").map(c => c.letter));
   S = {
-    lang, difficulty: $("#difficulty").value, puzzle, bag,
+    lang, difficulty: settings.cpu, puzzle, bag,
     owner: puzzle.cells.map(row => row.map(() => null)),
     hands: { player: [], cpu: [] },
     score: { player: 0, cpu: 0 },
@@ -112,7 +126,7 @@ function newGame() {
 }
 
 function applyLanguage() {
-  document.documentElement.lang = S.lang;
+  document.documentElement.lang = settings.lang;
   document.querySelectorAll("[data-i18n]").forEach(el => (el.textContent = t(el.dataset.i18n)));
   document.title = t("title");
 }
@@ -312,6 +326,8 @@ function cpuTurnPlan() {
 
 function cpuStep(plan) {
   if (S.over || S.turn !== "cpu") return;
+  // The computer waits while the player is in the menu.
+  if (!$("#menu").hidden) { cpuTimer = setTimeout(cpuStep, 300, plan); return; }
   const hand = S.hands.cpu;
   if (plan.left <= 0 || !hand.length) return endTurn();
   plan.left--;
@@ -488,7 +504,7 @@ function normalize(key) {
 
 document.addEventListener("keydown", e => {
   if (!S || S.over || e.metaKey || e.ctrlKey || e.altKey) return;
-  if (!$("#help-modal").hidden) return; // the How to play pop-up is open
+  if (!$("#help-modal").hidden || !$("#menu").hidden) return; // a pop-up or the menu is open
   if (e.target.tagName === "SELECT") return;
   const k = e.key;
   if (/^\p{L}$/u.test(k)) {
@@ -626,6 +642,7 @@ function render() {
 // On wide screens the rack sits beside the grid (see style.css): it's as tall as the
 // grid and its tiles grow with it, so it takes width instead of height.
 function fitGrid() {
+  if ($("#game").hidden) return; // measured again when the game is shown
   const grid = $("#grid"), root = document.documentElement.style;
   const beside = getComputedStyle(grid.parentElement).display === "flex";
   // The page's side padding (bigger around a phone's notch), plus a little slack.
@@ -696,10 +713,11 @@ function closeHelp() {
   modal.hidden = true;
   const card = modal.querySelector(".modal-card");
   card.style.transform = card.style.opacity = "";
-  $("#how-to").focus();
+  ($("#menu").hidden ? $("#how-to") : $("#how-to-menu")).focus();
 }
 
 $("#how-to").addEventListener("click", openHelp);
+$("#how-to-menu").addEventListener("click", openHelp);
 $("#help-close").addEventListener("click", closeHelp);
 $("#help-modal").addEventListener("click", e => { if (e.target === e.currentTarget) closeHelp(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeHelp(); });
@@ -733,11 +751,59 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeHelp();
   });
 })();
 
-// ---------- Boot ----------
-$("#new-game").addEventListener("click", newGame);
+// ---------- Start menu ----------
+// The choices for each setting: [value, picture or size, name]. Language names are
+// shown in their own language; the others use the menu's language.
+const CHOICES = {
+  lang: [["en", "🇬🇧", "English"], ["fr", "🇫🇷", "Français"], ["de", "🇩🇪", "Deutsch"], ["es", "🇪🇸", "Español"]],
+  level: [["easy", "6×6"], ["medium", "8×8"], ["hard", "10×10"]],
+  cpu: [["easy", "🐢"], ["medium", "🦊"], ["hard", "🚀"]],
+};
+
+function renderMenu() {
+  for (const box of document.querySelectorAll(".choices")) {
+    const key = box.dataset.setting;
+    box.innerHTML = "";
+    for (const [value, extra, name] of CHOICES[key]) {
+      const b = document.createElement("button");
+      b.className = `choice${settings[key] === value ? " selected" : ""}`;
+      b.innerHTML = key === "level"
+        ? `<span class="big">${extra}</span>${t(value)}`
+        : `<span class="big">${extra}</span>${name ?? t(value)}`;
+      b.addEventListener("click", () => {
+        settings[key] = value;
+        saveSettings();
+        settingsChanged = true;
+        applyLanguage();
+        renderMenu();
+      });
+      box.appendChild(b);
+    }
+  }
+  $("#continue").hidden = !(S && !S.over && !settingsChanged);
+}
+
+function showMenu() {
+  hideClueZoom();
+  $("#result").hidden = true;
+  $("#game").hidden = true;
+  $("#menu").hidden = false;
+  applyLanguage();
+  renderMenu();
+}
+
+function showGame() {
+  $("#menu").hidden = true;
+  $("#game").hidden = false;
+  if (S) render();
+}
+
+$("#play").addEventListener("click", () => { showGame(); newGame(); });
+$("#continue").addEventListener("click", showGame);
+$("#menu-btn").addEventListener("click", showMenu);
+$("#result-menu").addEventListener("click", showMenu);
 $("#play-again").addEventListener("click", newGame);
 $("#end-turn").addEventListener("click", endTurn);
-$("#lang").addEventListener("change", newGame);
-$("#puzzle-level").addEventListener("change", newGame);
-$("#difficulty").addEventListener("change", () => (S.difficulty = $("#difficulty").value));
-newGame();
+
+// ---------- Boot ----------
+showMenu();

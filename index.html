@@ -18,66 +18,63 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1 data-i18n="title">Crossword Duel</h1>
-    <div class="controls">
-      <label><span data-i18n="language">Language</span>
-        <select id="lang">
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="de">Deutsch</option>
-          <option value="es">Español</option>
-        </select>
-      </label>
-      <label><span data-i18n="puzzle">Puzzle</span>
-        <select id="puzzle-level">
-          <option value="easy" data-i18n="easy">Easy</option>
-          <option value="medium" data-i18n="medium" selected>Medium</option>
-          <option value="hard" data-i18n="hard">Hard</option>
-        </select>
-      </label>
-      <label><span data-i18n="opponent">Computer</span>
-        <select id="difficulty">
-          <option value="easy" data-i18n="easy">Easy</option>
-          <option value="medium" data-i18n="medium" selected>Medium</option>
-          <option value="hard" data-i18n="hard">Hard</option>
-        </select>
-      </label>
-      <button id="new-game" data-i18n="newGame">New game</button>
-    </div>
-  </header>
-
-  <section class="scoreboard">
-    <div class="counter player">
-      <span class="avatar">😎</span>
-      <span class="who" data-i18n="you">You</span>
-      <b id="score-player" class="digits">0</b>
-    </div>
-    <div id="turn" class="turn"></div>
-    <div class="counter cpu">
-      <b id="score-cpu" class="digits">0</b>
-      <span class="who" data-i18n="cpu">Computer</span>
-      <span class="avatar">🤖</span>
+  <!-- Start menu: pick language, puzzle size and computer strength, then Play. -->
+  <section id="menu" class="menu">
+    <div class="menu-card">
+      <img class="menu-logo" src="icons/icon-192.png" alt="">
+      <h1 data-i18n="title">Crossword Duel</h1>
+      <div class="menu-group">
+        <h2 data-i18n="language">Language</h2>
+        <div class="choices" data-setting="lang"></div>
+      </div>
+      <div class="menu-group">
+        <h2 data-i18n="puzzle">Puzzle</h2>
+        <div class="choices" data-setting="level"></div>
+      </div>
+      <div class="menu-group">
+        <h2 data-i18n="opponent">Computer</h2>
+        <div class="choices" data-setting="cpu"></div>
+      </div>
+      <button id="play" class="play-btn" data-i18n="play">Play</button>
+      <button id="continue" class="continue-btn" data-i18n="continue" hidden>Continue</button>
+      <button id="how-to-menu" class="how-to-btn" data-i18n="howTo">How to play</button>
     </div>
   </section>
 
-  <main>
-    <div class="board">
-      <div id="grid" class="grid"></div>
-      <div class="rack-area">
-        <div class="rack"><div id="hand" class="hand"></div></div>
-        <div class="rack-side">
-          <button id="end-turn" class="end-turn" data-i18n="endTurn">End turn</button>
-          <p id="message" class="message"></p>
-          <div class="info-row">
-            <span id="bag-count" class="bag-count"></span>
-            <span id="cpu-hand" class="cpu-hand"></span>
+  <div id="game" class="game" hidden>
+    <section class="scoreboard">
+      <div class="counter player">
+        <span class="avatar">😎</span>
+        <span class="who" data-i18n="you">You</span>
+        <b id="score-player" class="digits">0</b>
+      </div>
+      <div id="turn" class="turn"></div>
+      <div class="counter cpu">
+        <b id="score-cpu" class="digits">0</b>
+        <span class="who" data-i18n="cpu">Computer</span>
+        <span class="avatar">🤖</span>
+      </div>
+    </section>
+  
+    <main>
+      <div class="board">
+        <div id="grid" class="grid"></div>
+        <div class="rack-area">
+          <div class="rack"><div id="hand" class="hand"></div></div>
+          <div class="rack-side">
+            <button id="end-turn" class="end-turn" data-i18n="endTurn">End turn</button>
+            <p id="message" class="message"></p>
+            <div class="info-row">
+              <span id="bag-count" class="bag-count"></span>
+              <span id="cpu-hand" class="cpu-hand"></span>
+            </div>
+            <button id="menu-btn" class="menu-btn" data-i18n="menu">Menu</button>
+            <button id="how-to" class="how-to-btn" data-i18n="howTo">How to play</button>
           </div>
-          <button id="how-to" class="how-to-btn" data-i18n="howTo">How to play</button>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
 
   <!-- How to play: covers the screen; closes with the ✕, Esc, a tap outside or a swipe down. -->
   <div id="help-modal" class="modal" hidden>
@@ -98,7 +95,10 @@
       <p id="result-text"></p>
       <p id="result-quip" class="result-quip"></p>
       <div id="result-score" class="result-scores"></div>
-      <button id="play-again" data-i18n="playAgain">Play again</button>
+      <div class="result-buttons">
+        <button id="play-again" data-i18n="playAgain">Play again</button>
+        <button id="result-menu" class="result-menu-btn" data-i18n="menu">Menu</button>
+      </div>
     </div>
   </div>
 
