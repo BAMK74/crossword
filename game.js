@@ -627,6 +627,9 @@ function render() {
 function fitGrid() {
   const grid = $("#grid"), root = document.documentElement.style;
   const beside = getComputedStyle(grid.parentElement).display === "flex";
+  // The page's side padding (bigger around a phone's notch), plus a little slack.
+  const bodyStyle = getComputedStyle(document.body);
+  const padX = parseFloat(bodyStyle.paddingLeft) + parseFloat(bodyStyle.paddingRight) + 4;
   // Start from the smallest size: a grid that's too big would make phone browsers
   // widen the page, and the window would then measure wider than the screen.
   grid.style.setProperty("--cell", "26px");
@@ -641,7 +644,7 @@ function fitGrid() {
     // Beside the grid, the rack column (150px, see style.css) and the gap (28px) take
     // width, plus some slack.
     const fixed = beside ? 28 + 150 + 12 : 0;
-    const byWidth = (innerWidth - 36 - fixed) / S.puzzle.cols;
+    const byWidth = (innerWidth - padX - fixed) / S.puzzle.cols;
     const byHeight = (innerHeight - rest - 12) / S.puzzle.rows;
     const size = `${Math.max(26, Math.min(96, Math.floor(Math.min(byWidth, byHeight))))}px`;
     if (grid.style.getPropertyValue("--cell") === size) break;

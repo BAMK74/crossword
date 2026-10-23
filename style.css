@@ -26,7 +26,14 @@ html {
 body {
   width: 100%;
   margin: 0;
-  padding: 16px;
+  /* 16px all round, more where a phone's notch, rounded corners or home bar need it
+     (when opened full screen from the home screen). */
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  /* Feel like an app: no page bounce, no double-tap zoom, no grey tap flashes. */
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   background: var(--bg);
   color: var(--text);
