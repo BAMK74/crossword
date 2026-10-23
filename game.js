@@ -27,7 +27,7 @@ const I18N = {
     yourTurn: "Your turn", cpuTurn: "Computer's turn…", endTurn: "End turn", bag: "Letters in bag", cpuHand: "Computer's hand",
     notInHand: "You don't have that letter.", noRoom: "That square is already filled.",
     letters: "letters", wrong: "wrong", wordBonus: "word complete", allLetters: "all letters used", gridBonus: "grid finished",
-    help: `Each turn you get up to ${HAND_SIZE} letters. Drag a letter from your hand onto a square (or pick a square and type the letter). Right square: +${LETTER_POINTS}. Wrong square: the letter comes back and you lose ${WRONG_PENALTY}. Finishing a word: +${WORD_BONUS}. All ${HAND_SIZE} letters in one turn: +${ALL_LETTERS_BONUS}. Last letter of the grid: +${GRID_BONUS}. Unused letters stay in your hand. Space switches direction, Tab jumps to the next word.`,
+    help: `Each turn you get up to ${HAND_SIZE} letters. Drag a letter from your hand onto a square (or pick a square and type the letter). Right square: +${LETTER_POINTS}. Wrong square: the letter comes back and you lose ${WRONG_PENALTY}. Finishing a word: +${WORD_BONUS}. All ${HAND_SIZE} letters in one turn: +${ALL_LETTERS_BONUS}. Last letter of the grid: +${GRID_BONUS}. Unused letters stay in your hand. Until you end your turn, you can drag letters you placed to another square or back to your rack. Space switches direction, Tab jumps to the next word.`,
     youWin: "You win! 🎉", cpuWins: "The computer wins 🤖", draw: "It's a draw!", playAgain: "Play again", wordsSolved: "words", total: "Total", howTo: "How to play",
     quips: {
       win: ["Word wizard! 🧙", "The computer is rebooting from shame.", "Dictionary? You ARE the dictionary.", "Brains: 1, Robot: 0 🧠"],
@@ -41,7 +41,7 @@ const I18N = {
     yourTurn: "À vous de jouer", cpuTurn: "L'ordinateur joue…", endTurn: "Fin du tour", bag: "Lettres dans le sac", cpuHand: "Main de l'ordinateur",
     notInHand: "Vous n'avez pas cette lettre.", noRoom: "Cette case est déjà remplie.",
     letters: "lettres", wrong: "erreur", wordBonus: "mot complet", allLetters: "toutes les lettres", gridBonus: "grille terminée",
-    help: `À chaque tour vous avez jusqu'à ${HAND_SIZE} lettres. Faites glisser une lettre de votre main sur une case (ou choisissez une case et tapez la lettre). Bonne case : +${LETTER_POINTS}. Mauvaise case : la lettre revient et vous perdez ${WRONG_PENALTY}. Mot terminé : +${WORD_BONUS}. Les ${HAND_SIZE} lettres en un tour : +${ALL_LETTERS_BONUS}. Dernière lettre de la grille : +${GRID_BONUS}. Les lettres non jouées restent dans votre main. Espace change de sens, Tab passe au mot suivant.`,
+    help: `À chaque tour vous avez jusqu'à ${HAND_SIZE} lettres. Faites glisser une lettre de votre main sur une case (ou choisissez une case et tapez la lettre). Bonne case : +${LETTER_POINTS}. Mauvaise case : la lettre revient et vous perdez ${WRONG_PENALTY}. Mot terminé : +${WORD_BONUS}. Les ${HAND_SIZE} lettres en un tour : +${ALL_LETTERS_BONUS}. Dernière lettre de la grille : +${GRID_BONUS}. Les lettres non jouées restent dans votre main. Tant que le tour n'est pas fini, vous pouvez déplacer les lettres posées vers une autre case ou les remettre sur le chevalet. Espace change de sens, Tab passe au mot suivant.`,
     youWin: "Vous avez gagné ! 🎉", cpuWins: "L'ordinateur gagne 🤖", draw: "Égalité !", playAgain: "Rejouer", wordsSolved: "mots", total: "Total", howTo: "Comment jouer",
     quips: {
       win: ["Magicien des mots ! 🧙", "L'ordinateur redémarre de honte.", "Le dictionnaire, c'est vous !", "Cerveau : 1, Robot : 0 🧠"],
@@ -55,7 +55,7 @@ const I18N = {
     yourTurn: "Du bist dran", cpuTurn: "Der Computer ist dran…", endTurn: "Zug beenden", bag: "Buchstaben im Beutel", cpuHand: "Hand des Computers",
     notInHand: "Diesen Buchstaben hast du nicht.", noRoom: "Dieses Feld ist schon belegt.",
     letters: "Buchstaben", wrong: "falsch", wordBonus: "Wort fertig", allLetters: "alle Buchstaben", gridBonus: "Rätsel fertig",
-    help: `In jedem Zug hast du bis zu ${HAND_SIZE} Buchstaben. Ziehe einen Buchstaben aus deiner Hand auf ein Feld (oder wähle ein Feld und tippe den Buchstaben). Richtiges Feld: +${LETTER_POINTS}. Falsches Feld: der Buchstabe kommt zurück und du verlierst ${WRONG_PENALTY}. Wort fertig: +${WORD_BONUS}. Alle ${HAND_SIZE} Buchstaben in einem Zug: +${ALL_LETTERS_BONUS}. Letzter Buchstabe des Rätsels: +${GRID_BONUS}. Ungenutzte Buchstaben bleiben in deiner Hand. Leertaste wechselt die Richtung, Tab springt zum nächsten Wort.`,
+    help: `In jedem Zug hast du bis zu ${HAND_SIZE} Buchstaben. Ziehe einen Buchstaben aus deiner Hand auf ein Feld (oder wähle ein Feld und tippe den Buchstaben). Richtiges Feld: +${LETTER_POINTS}. Falsches Feld: der Buchstabe kommt zurück und du verlierst ${WRONG_PENALTY}. Wort fertig: +${WORD_BONUS}. Alle ${HAND_SIZE} Buchstaben in einem Zug: +${ALL_LETTERS_BONUS}. Letzter Buchstabe des Rätsels: +${GRID_BONUS}. Ungenutzte Buchstaben bleiben in deiner Hand. Bis du den Zug beendest, kannst du gelegte Buchstaben auf ein anderes Feld ziehen oder zurück auf die Ablage legen. Leertaste wechselt die Richtung, Tab springt zum nächsten Wort.`,
     youWin: "Du hast gewonnen! 🎉", cpuWins: "Der Computer gewinnt 🤖", draw: "Unentschieden!", playAgain: "Nochmal", wordsSolved: "Wörter", total: "Gesamt", howTo: "Spielanleitung",
     quips: {
       win: ["Wortzauberer! 🧙", "Der Computer startet vor Scham neu.", "Wörterbuch? Du BIST das Wörterbuch.", "Hirn: 1, Roboter: 0 🧠"],
@@ -69,7 +69,7 @@ const I18N = {
     yourTurn: "Te toca", cpuTurn: "Juega el ordenador…", endTurn: "Terminar turno", bag: "Letras en la bolsa", cpuHand: "Mano del ordenador",
     notInHand: "No tienes esa letra.", noRoom: "Esa casilla ya está ocupada.",
     letters: "letras", wrong: "error", wordBonus: "palabra completa", allLetters: "todas las letras", gridBonus: "crucigrama terminado",
-    help: `En cada turno tienes hasta ${HAND_SIZE} letras. Arrastra una letra de tu mano a una casilla (o elige una casilla y escribe la letra). Casilla correcta: +${LETTER_POINTS}. Casilla incorrecta: la letra vuelve y pierdes ${WRONG_PENALTY}. Palabra terminada: +${WORD_BONUS}. Las ${HAND_SIZE} letras en un turno: +${ALL_LETTERS_BONUS}. Última letra del crucigrama: +${GRID_BONUS}. Las letras que no uses se quedan en tu mano. Espacio cambia de dirección, Tab pasa a la siguiente palabra. (Sin tildes, pero con Ñ.)`,
+    help: `En cada turno tienes hasta ${HAND_SIZE} letras. Arrastra una letra de tu mano a una casilla (o elige una casilla y escribe la letra). Casilla correcta: +${LETTER_POINTS}. Casilla incorrecta: la letra vuelve y pierdes ${WRONG_PENALTY}. Palabra terminada: +${WORD_BONUS}. Las ${HAND_SIZE} letras en un turno: +${ALL_LETTERS_BONUS}. Última letra del crucigrama: +${GRID_BONUS}. Las letras que no uses se quedan en tu mano. Hasta que termines el turno, puedes arrastrar las letras que pusiste a otra casilla o devolverlas al atril. Espacio cambia de dirección, Tab pasa a la siguiente palabra. (Sin tildes, pero con Ñ.)`,
     youWin: "¡Has ganado! 🎉", cpuWins: "Gana el ordenador 🤖", draw: "¡Empate!", playAgain: "Otra vez", wordsSolved: "palabras", total: "Total", howTo: "Cómo jugar",
     quips: {
       win: ["¡Mago de las palabras! 🧙", "El ordenador se reinicia de vergüenza.", "¿Diccionario? ¡Tú ERES el diccionario!", "Cerebro: 1, Robot: 0 🧠"],
@@ -129,7 +129,8 @@ function startTurn(who) {
     return startTurn(other(who));
   }
   S.turn = who;
-  S.turnLog = { who, points: 0, banked: false, letters: 0, wrong: 0, words: 0, all: false, grid: false };
+  S.turnLog = { who, points: 0, banked: false, letters: 0, wrong: 0, words: 0, all: false, grid: false,
+    placed: [], wordsDone: new Set() };
   S.message = "";
   render();
   if (who === "cpu") cpuTimer = setTimeout(cpuStep, CPU_STEP_MS, cpuTurnPlan());
@@ -198,39 +199,59 @@ function animateScore(who, from, to) {
 }
 
 // Tries to put a letter from `who`'s hand into (r, c). Returns true if it was right.
+// The turn log remembers which letters were placed and which words they completed,
+// so a letter can be taken back (see unplace) until the turn ends.
 function place(r, c, ch, who) {
   const hand = S.hands[who], log = S.turnLog;
   const cell = S.puzzle.cells[r][c];
   if (cell.letter !== ch) {
-    log.points -= WRONG_PENALTY;
     log.wrong++;
+    recount(log);
     S.flash = { r, c, ch, who };
     setTimeout(() => { if (S.flash?.r === r && S.flash?.c === c) { S.flash = null; render(); } }, 650);
     return false;
   }
   hand.splice(hand.indexOf(ch), 1);
   S.owner[r][c] = who;
-  log.points += LETTER_POINTS;
-  log.letters++;
+  log.placed.push({ r, c });
   for (const idx of Object.values(cell.words)) {
     const w = S.puzzle.words[idx];
     if (!w.owner && cellsOf(w).every(([a, b]) => locked(a, b))) {
       w.owner = who;
-      log.points += WORD_BONUS;
-      log.words++;
+      log.wordsDone.add(idx);
     }
   }
-  if (log.letters === HAND_SIZE && !log.all) {
-    log.all = true;
-    log.points += ALL_LETTERS_BONUS;
-  }
   const finished = S.owner.every((row, a) => row.every((o, b) => o !== null || S.puzzle.cells[a][b]?.type !== "letter"));
-  if (finished) {
-    log.grid = true;
-    log.points += GRID_BONUS;
-  }
+  log.grid = finished;
+  recount(log);
   if (finished) endGame();
   return true;
+}
+
+// Takes back a letter placed this turn: it goes back to the hand, and any word it
+// completed this turn is open again.
+function unplace(r, c) {
+  const log = S.turnLog, cell = S.puzzle.cells[r][c];
+  S.owner[r][c] = null;
+  S.hands[log.who].push(cell.letter);
+  log.placed = log.placed.filter(p => p.r !== r || p.c !== c);
+  for (const idx of Object.values(cell.words)) {
+    if (log.wordsDone.delete(idx)) S.puzzle.words[idx].owner = null;
+  }
+  recount(log);
+}
+
+function placedThisTurn(r, c) {
+  return S.turn === "player" && S.turnLog?.placed.some(p => p.r === r && p.c === c);
+}
+
+// Works out the turn's points from what's on the board now. Wrong tries always count.
+function recount(log) {
+  log.letters = log.placed.length;
+  log.words = log.wordsDone.size;
+  log.all = log.letters >= HAND_SIZE;
+  log.points = log.letters * LETTER_POINTS - log.wrong * WRONG_PENALTY + log.words * WORD_BONUS +
+    (log.all ? ALL_LETTERS_BONUS : 0) + (log.grid ? GRID_BONUS : 0);
 }
 
 function endGame() {
@@ -401,25 +422,35 @@ function playLetter(ch) {
     else step(1);
   }
   render();
-  if (!S.over && !S.hands.player.length) setTimeout(endTurn, 400);
+  // No auto end when the hand is empty: the player can still move letters around,
+  // so End turn pulses instead (see render).
 }
 
-// Drags a tile from the hand onto a square. Pointer events, so it works with a mouse
-// and on touch screens; dropping anywhere else puts the tile back.
-function startDrag(e, ch, tile) {
+// Drags a tile from the hand onto a square, or a letter placed this turn (`from`, its
+// square) to another square. Pointer events, so it works with a mouse and on touch
+// screens. Dropping a hand tile anywhere else puts it back; dropping a placed letter
+// anywhere but a free square (or its own) returns it to the hand.
+function startDrag(e, ch, el, from = null) {
   if (S.over || S.turn !== "player") return;
   e.preventDefault();
-  const ghost = tile.cloneNode(true);
+  hideClueZoom();
+  let ghost;
+  if (from) {
+    ghost = document.createElement("div");
+    ghost.className = "tile";
+    ghost.textContent = ch;
+  } else ghost = el.cloneNode(true);
   ghost.classList.add("dragging");
   document.body.appendChild(ghost);
-  tile.classList.add("lifted");
-  let target = null;
+  el.classList.add("lifted");
+  let target = null, overOwn = false;
 
   const move = ev => {
     ghost.style.left = `${ev.clientX}px`;
     ghost.style.top = `${ev.clientY}px`;
-    const el = document.elementFromPoint(ev.clientX, ev.clientY)?.closest(".cell");
-    const open = el && !locked(+el.dataset.r, +el.dataset.c) ? el : null;
+    const cell = document.elementFromPoint(ev.clientX, ev.clientY)?.closest(".cell");
+    overOwn = !!from && cell === el;
+    const open = cell && !locked(+cell.dataset.r, +cell.dataset.c) ? cell : null;
     if (open !== target) {
       target?.classList.remove("drop-target");
       open?.classList.add("drop-target");
@@ -431,12 +462,14 @@ function startDrag(e, ch, tile) {
     window.removeEventListener("pointerup", end);
     window.removeEventListener("pointercancel", end);
     ghost.remove();
-    tile.classList.remove("lifted");
+    el.classList.remove("lifted");
     target?.classList.remove("drop-target");
-    if (ev.type === "pointerup" && target) {
+    if (ev.type !== "pointerup" || overOwn) return;
+    if (from) unplace(from.r, from.c);
+    if (target) {
       select(+target.dataset.r, +target.dataset.c, S.sel.dir);
       playLetter(ch);
-    }
+    } else render();
   };
   move(e);
   window.addEventListener("pointermove", move);
@@ -550,7 +583,13 @@ function render() {
     if (r === sel.r && c === sel.c) el.classList.add("selected");
     if (flash) el.classList.add("wrong");
     el.innerHTML = `<span class="letter">${flash ? S.flash.ch : owner[r][c] ? cell.letter : ""}</span>`;
-    el.addEventListener("mousedown", e => { e.preventDefault(); onCellClick(r, c); });
+    if (placedThisTurn(r, c)) {
+      // Letters placed this turn can be picked up again and moved.
+      el.classList.add("movable");
+      el.addEventListener("pointerdown", e => startDrag(e, cell.letter, el, { r, c }));
+    } else {
+      el.addEventListener("mousedown", e => { e.preventDefault(); onCellClick(r, c); });
+    }
     grid.appendChild(el);
   }
 
@@ -570,6 +609,7 @@ function render() {
   $("#cpu-hand").title = t("cpuHand");
   $("#bag-count").textContent = `${t("bag")}: ${S.bag.length}`;
   $("#end-turn").disabled = !myTurn;
+  $("#end-turn").classList.toggle("ready", myTurn && !S.hands.player.length);
   // The turn sits between the two score cards and points at whoever is playing.
   $("#turn").textContent = !S.turn ? "" : myTurn ? `◀ ${t("yourTurn")}` : `${t("cpuTurn")} ▶`;
   $("#turn").className = `turn ${S.turn ?? ""}`;

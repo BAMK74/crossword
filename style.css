@@ -186,6 +186,16 @@ button:hover { opacity: .85; }
   font-weight: 600;
 }
 .end-turn:disabled { opacity: .35; cursor: default; }
+/* All letters played: nudge the player to end the turn (they can still move letters). */
+.end-turn.ready { background: var(--player); border-color: var(--player); animation: ready-pulse 1.2s ease-in-out infinite; }
+@keyframes ready-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(47,158,106,.5); }
+  50% { box-shadow: 0 0 0 8px rgba(47,158,106,0); }
+}
+/* Letters placed this turn can be dragged again. */
+.cell.movable { cursor: grab; touch-action: none; }
+.cell.movable .letter { text-decoration: underline dotted; text-underline-offset: .15em; text-decoration-thickness: 2px; }
+.cell.lifted .letter { opacity: .25; }
 .message { min-height: 1.2em; margin: 0; color: var(--cpu); font-size: .9rem; text-align: center; }
 .info-row { display: flex; justify-content: center; align-items: center; gap: 24px; color: var(--muted); font-size: .85rem; }
 .bag-count::before { content: "👜 "; }
