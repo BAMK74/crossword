@@ -353,10 +353,82 @@ main {
   75% { transform: translateX(3px); background: #ffb3b0; }
 }
 
-/* "How to play": folded away so it doesn't take space from the grid. */
-.help { color: var(--muted); font-size: .85rem; max-width: 580px; margin: 10px auto 0; text-align: center; }
-.help summary { cursor: pointer; font-weight: 600; }
-.help p { margin: 6px 0 0; }
+/* "How to play": a small link-style button; the rules open in a pop-up. */
+.how-to-btn {
+  margin-top: 4px;
+  padding: 4px 10px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.how-to-btn::before { content: "❓ "; text-decoration: none; }
+
+/* How to play pop-up: covers the screen, with a margin (bigger around a phone's notch
+   and home bar). The card scrolls if the rules don't fit. */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: rgba(40, 30, 20, .4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.modal[hidden] { display: none; }
+.modal-card {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 28px 24px 24px;
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: 0 16px 50px rgba(0,0,0,.3);
+  transition: transform .2s, opacity .2s;
+  animation: modal-in .25s ease-out;
+}
+@keyframes modal-in {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.modal-card h2 { margin: 0 48px 16px; text-align: center; font-size: 1.4rem; }
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  border: 0;
+  background: #ece8df;
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 40px;
+  text-align: center;
+}
+.modal-close:hover { background: #e0dacd; opacity: 1; }
+.help-list {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+.help-list li {
+  position: relative;
+  padding: 10px 0 10px 34px;
+  border-bottom: 1px solid #efeae0;
+}
+.help-list li:last-child { border-bottom: 0; }
+.help-list li::before { content: "✏️"; position: absolute; left: 0; top: 10px; }
 .len { color: var(--muted); font-size: .85em; }
 
 /* End screen: above everything (clue squares use z-index 1–2), with a blurred grid behind. */
@@ -488,5 +560,4 @@ main {
   .tile { width: var(--tile, 32px); height: var(--tile, 32px); font-size: calc(var(--tile, 32px) * .5); border-radius: calc(var(--tile, 32px) * .14); }
   .tile::after { font-size: calc(var(--tile, 32px) * .17); right: 6%; bottom: 3%; }
   .info-row { flex-direction: column; gap: 6px; }
-  .help { max-width: 150px; }
 }

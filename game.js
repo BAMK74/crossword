@@ -488,6 +488,7 @@ function normalize(key) {
 
 document.addEventListener("keydown", e => {
   if (!S || S.over || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (!$("#help-modal").hidden) return; // the How to play pop-up is open
   if (e.target.tagName === "SELECT") return;
   const k = e.key;
   if (/^\p{L}$/u.test(k)) {
@@ -669,7 +670,68 @@ function fitGrid() {
   board.style.left = `${Math.round((g.left + g.right) / 2 - (s.left + s.right) / 2)}px`;
 }
 window.addEventListener("resize", () => S && fitGrid());
-document.querySelector(".help").addEventListener("toggle", () => S && fitGrid());
+
+// ---------- How to play ----------
+// A pop-up covering the screen (with a margin). The rules are one text per language;
+// each sentence becomes a line of the list. Closes with the ✕, Esc, a tap outside the
+// card, or (on touch screens) a swipe down.
+function openHelp() {
+  hideClueZoom();
+  const list = $("#help-list");
+  list.innerHTML = "";
+  for (const sentence of t("help").split(/(?<=[.!?)])\s+(?=\S)/)) {
+    const li = document.createElement("li");
+    li.textContent = sentence;
+    list.appendChild(li);
+  }
+  const modal = $("#help-modal");
+  modal.hidden = false;
+  modal.querySelector(".modal-card").scrollTop = 0;
+  $("#help-close").focus();
+}
+
+function closeHelp() {
+  const modal = $("#help-modal");
+  if (modal.hidden) return;
+  modal.hidden = true;
+  const card = modal.querySelector(".modal-card");
+  card.style.transform = card.style.opacity = "";
+  $("#how-to").focus();
+}
+
+$("#how-to").addEventListener("click", openHelp);
+$("#help-close").addEventListener("click", closeHelp);
+$("#help-modal").addEventListener("click", e => { if (e.target === e.currentTarget) closeHelp(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeHelp(); });
+
+// Swipe down to close: the card follows the finger once it's scrolled to the top, and
+// closes if pulled far enough (or flicked); otherwise it springs back.
+(() => {
+  const card = $("#help-modal .modal-card");
+  let startY = null, startT = 0, dy = 0;
+  card.addEventListener("touchstart", e => {
+    if (card.scrollTop > 0 || e.touches.length !== 1) return;
+    startY = e.touches[0].clientY;
+    startT = performance.now();
+    dy = 0;
+    card.style.transition = "none";
+  }, { passive: true });
+  card.addEventListener("touchmove", e => {
+    if (startY === null) return;
+    dy = Math.max(0, e.touches[0].clientY - startY);
+    if (dy > 0) e.preventDefault(); // pulling the card, not scrolling it
+    card.style.transform = `translateY(${dy}px)`;
+    card.style.opacity = String(Math.max(0.4, 1 - dy / 600));
+  }, { passive: false });
+  card.addEventListener("touchend", () => {
+    if (startY === null) return;
+    const fast = dy / Math.max(1, performance.now() - startT) > 0.6;
+    card.style.transition = "";
+    startY = null;
+    if (dy > 120 || (fast && dy > 40)) closeHelp();
+    else card.style.transform = card.style.opacity = "";
+  });
+})();
 
 // ---------- Boot ----------
 $("#new-game").addEventListener("click", newGame);
